@@ -3,19 +3,14 @@ package com.pinchuk.resthotelbooking.domain;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "room")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Room {
 	
 	@Id
@@ -23,16 +18,17 @@ public class Room {
 	@Column(name = "id")
     private Long id;
 	
-	@Column(name = "number")
+	@Column(name = "number", nullable = false)
 	private String number;
-	@Column(name = "price")
+	@Column(name = "price", nullable = false)
 	private BigDecimal price;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_room_category")
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_room_category", nullable = false)
 	private RoomCategory roomCategory;
 	
 	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Booking> bookings;
 	
 	public Room() {

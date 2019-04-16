@@ -2,17 +2,14 @@ package com.pinchuk.resthotelbooking.domain;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "room_category")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class RoomCategory {
 	
 	@Id
@@ -20,16 +17,21 @@ public class RoomCategory {
 	@Column(name = "id")
     private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	private String name;
 	
 	@OneToMany(mappedBy = "roomCategory", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Room> rooms;
 	
 	public RoomCategory() {
 		
 	}
 	
+	public RoomCategory(Long id) {
+		this.id = id;
+	}
+
 	public RoomCategory(Long id, String name, List<Room> rooms) {
 		this.id = id;
 		this.name = name;

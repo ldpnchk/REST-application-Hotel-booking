@@ -5,31 +5,36 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-@Table(name = "service")
-public class Service {
+@Table(name = "hotel_service")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class HotelService {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
     private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	private String name;
-	@Column(name = "price")
+	@Column(name = "price", nullable = false)
 	private BigDecimal price;
 	
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-	@JoinTable(name = "booking_service",
-				joinColumns = { @JoinColumn(name = "id_service") },
+	@JoinTable(name = "booking_hotel_service",
+				joinColumns = { @JoinColumn(name = "id_hotel_service") },
 				inverseJoinColumns = { @JoinColumn(name = "id_booking") })
+	@JsonIgnore
 	private List<Booking> bookings;
 	
-	public Service() {
+	public HotelService() {
 		
 	}
 	
-	public Service(Long id, String name, BigDecimal price, List<Booking> bookings) {
+	public HotelService(Long id, String name, BigDecimal price, List<Booking> bookings) {
 		this.id = id;
 		this.name = name;
 		this.price = price;

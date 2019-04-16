@@ -3,21 +3,13 @@ package com.pinchuk.resthotelbooking.domain;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "booking")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Booking {
 	
 	@Id
@@ -25,35 +17,35 @@ public class Booking {
 	@Column(name = "id")
     private Long id;
 	
-	@Column(name = "start_date")
+	@Column(name = "start_date", nullable = false)
 	private LocalDate startDate;
-	@Column(name = "end_date")
+	@Column(name = "end_date", nullable = false)
 	private LocalDate endDate;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_room")
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_room", nullable = false)
 	private Room room;
-	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_user")
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_user", nullable = false)
 	private User user;
 	
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-	@JoinTable(name = "booking_service",
+	@JoinTable(name = "booking_hotel_service",
 				joinColumns = { @JoinColumn(name = "id_booking") },
-				inverseJoinColumns = { @JoinColumn(name = "id_service") })
-	private List<Service> services;
+				inverseJoinColumns = { @JoinColumn(name = "id_hotel_service") })
+	private List<HotelService> hotelServices;
 	
 	public Booking() {
 		
 	}
 	
-	public Booking(Long id, LocalDate startDate, LocalDate endDate, Room room, User user, List<Service> services) {
+	public Booking(Long id, LocalDate startDate, LocalDate endDate, Room room, User user, List<HotelService> hotelServices) {
 		this.id = id;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.room = room;
 		this.user = user;
-		this.services = services;
+		this.hotelServices = hotelServices;
 	}
 
 	public Long getId() {
@@ -95,12 +87,12 @@ public class Booking {
 		this.user = user;
 	}
 
-	public List<Service> getServices() {
-		return services;
+	public List<HotelService> getHotelServices() {
+		return hotelServices;
 	}
 
-	public void setServices(List<Service> services) {
-		this.services = services;
+	public void setHotelServices(List<HotelService> hotelServices) {
+		this.hotelServices = hotelServices;
 	}
-
+	
 }
