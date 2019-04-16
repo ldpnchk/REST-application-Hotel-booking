@@ -9,13 +9,14 @@ Installation guide
 Data insertion script is located at: \src\main\resources\data.sql
 	
 Endpoints:
-1. View list of available rooms for specified dates.
-	Method = GET
-	URL = /room/getAvailableRooms?startDate={start_date}&endDate={end_date}
-		Notice: {start_date} should be before {end_date}
-	Request example:
-		/room/getAvailableRooms?startDate=2020-04-12&endDate=2020-09-13
+1. View list of available rooms for specified dates. <br /> <br />
+	Method = GET <br />
+	URL = /room/getAvailableRooms?startDate={start_date}&endDate={end_date} <br />
+		Notice: {start_date} should be before {end_date} <br />
+	Request example: <br />
+		/room/getAvailableRooms?startDate=2020-04-12&endDate=2020-09-13 <br />
 	Response example:
+	```json
 		[
 			{
 				"id": 1,
@@ -36,13 +37,15 @@ Endpoints:
 				}
 			}
 		]
+	```
 		
-2. View rooms filtered by category.
-	Method = GET
-	URL = /room/getRoomsByCategory?categoryId={category_id}
-	Request example:
-		/room/getRoomsByCategory?categoryId=2
+2. View rooms filtered by category.<br /><br />
+	Method = GET<br />
+	URL = /room/getRoomsByCategory?categoryId={category_id}<br />
+	Request example:<br />
+		/room/getRoomsByCategory?categoryId=2<br />
 	Response example:
+	```json
 		[
 			{
 				"id": 6,
@@ -63,28 +66,33 @@ Endpoints:
 				}
 			}
 		]
+	```
 		
-3. Create user.
-	Method = POST
-	URL = /user/create
+3. Create user.<br /><br />
+	Method = POST<br />
+	URL = /user/create<br />
 	Request body example:
+	```json
 		{
 			"firstName": "Olena",
 			"lastName": "Tkachuk"
 		}
+	```
 	Response example:
+	```json
 		{
 			"id": 4,
 			"firstName": "Olena",
 			"lastName": "Tkachuk"
 		}
+	```
 
-4. User can book the room for specified days.
-	Method = POST
-	URL = /booking/create
-		Notice: "startDate" should be before "endDate"
-				"startDate" shouldn't be for a passed date
+4. User can book the room for specified days.<br /><br />
+	Method = POST<br />
+	URL = /booking/create<br />
+		Notice: "startDate" should be before "endDate", "startDate" shouldn't be for a passed date<br />
 	Request body example:
+	```json
 		{
 			"startDate": "2019-04-25",
 			"endDate":	"2019-04-29",
@@ -92,7 +100,9 @@ Endpoints:
 			"userId": 1,
 			"hotelServiceIds": [1, 2, 3]
 		}
+	```
 	Response example:
+	```json
 		{
 			"id": 8,
 			"startDate": "2022-12-12",
@@ -129,13 +139,15 @@ Endpoints:
 				}
 			]
 		}
+	```
 		
-5. User can view his booking.
-	Method = GET
-	URL = /booking/getByUser?userId={user_id}
-	Request example:
-		/booking/getByUser?userId=3
+5. User can view his booking.<br /><br />
+	Method = GET<br />
+	URL = /booking/getByUser?userId={user_id}<br />
+	Request example:<br />
+		/booking/getByUser?userId=3<br />
 	Response example:
+	```json
 		[
 			{
 				"id": 7,
@@ -164,21 +176,23 @@ Endpoints:
 				]
 			}
 		]
+	```
 	
-6. User can get the total price of the booking (room for dates period + cost of additional options).
-	Method = GET
-	URL = /booking/getTotalPrice?bookingId={booking_id}
-	Request example:
-		/booking/getTotalPrice?bookingId=3
-	Response example:
+6. User can get the total price of the booking (room for dates period + cost of additional options).<br /><br />
+	Method = GET<br />
+	URL = /booking/getTotalPrice?bookingId={booking_id}<br />
+	Request example:<br />
+		/booking/getTotalPrice?bookingId=3<br />
+	Response example:<br />
 		1950
 		
-7. View all bookings for the hotel.
-	Method = GET
-	URL = /booking/getAll
-	Request example:
-		/booking/getAll
+7. View all bookings for the hotel.<br /><br />
+	Method = GET<br />
+	URL = /booking/getAll<br />
+	Request example:<br />
+		/booking/getAll<br />
 	Response example:
+	```json
 		[
 			{
 				"id": 1,
@@ -247,3 +261,4 @@ Endpoints:
 				]
 			}
 		]
+	```
